@@ -4,7 +4,6 @@ from PyQt5 import QtWidgets,QtCore
 from wake import Ui_Form  # импорт нашего сгенерированного файла
 from login import Ui_Login_Form
 from classBase import *
-from classSerial import *
 #from game import *
 import source_rc
 import locale
