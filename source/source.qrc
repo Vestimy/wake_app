@@ -1,0 +1,12 @@
+<RCC>
+  <qresource>
+    <file>images/in_bott.jpg</file>
+    <file>images/logo_new.png</file>
+    <file>images/logo.png</file>
+    <file>images/exit_button.png</file>
+  </qresource>
+  <qresource>
+    <file>icons/wakeboarding.png</file>
+    <file>icons/favicon.ico</file>
+  </qresource>
+</RCC>

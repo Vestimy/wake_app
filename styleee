@@ -1,0 +1,12 @@
+#FORM
+
+background-image: url(:/images/logo_new.png) repeat-y;
+background-repeat: no-repeat ;
+background-position: center;
+
+
+
+
+#tab_3 { background: rgba(32, 80, 96, 100); }
+#tab_4 { background: rgba(32, 80, 96, 100); }
+#tab_5 { background: rgba(32, 80, 96, 100); }
