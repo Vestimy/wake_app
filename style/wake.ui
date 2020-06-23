@@ -399,7 +399,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <property name="iconSize">
       <size>
@@ -477,7 +477,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
             <item row="0" column="0">
              <widget class="QLabel" name="Label_1">
               <property name="text">
-               <string>Скорость</string>
+               <string>Speed</string>
               </property>
              </widget>
             </item>
@@ -737,7 +737,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
                  </size>
                 </property>
                 <property name="text">
-                 <string>Домой</string>
+                 <string>Home</string>
                 </property>
                </widget>
               </item>
@@ -772,7 +772,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
                  </size>
                 </property>
                 <property name="text">
-                 <string>Таймер</string>
+                 <string>Timer</string>
                 </property>
                </widget>
               </item>
@@ -897,7 +897,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
                </size>
               </property>
               <property name="text">
-               <string>Назад</string>
+               <string>Back</string>
               </property>
              </widget>
             </item>
@@ -916,7 +916,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
                </size>
               </property>
               <property name="text">
-               <string>Стоп</string>
+               <string>Stop</string>
               </property>
              </widget>
             </item>
@@ -935,7 +935,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
                </size>
               </property>
               <property name="text">
-               <string>Вперед</string>
+               <string>Forth</string>
               </property>
              </widget>
             </item>
@@ -1666,7 +1666,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
           <enum>QTabWidget::South</enum>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="usesScrollButtons">
           <bool>true</bool>

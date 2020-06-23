@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file 'style/wake.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -1131,8 +1129,8 @@ class Ui_Form(object):
         self.verticalLayout_2.addLayout(self.verticalLayout)
 
         self.retranslateUi(Form)
-        self.tabWidget.setCurrentIndex(3)
-        self.addSettings.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(0)
+        self.addSettings.setCurrentIndex(0)
         self.shutdownButton.clicked.connect(Form.close)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -1140,14 +1138,14 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "WakePark"))
         self.currentDateTime.setText(_translate("Form", "Monday, 25-10-2015 3:14 PM"))
-        self.Label_1.setText(_translate("Form", "Скорость"))
+        self.Label_1.setText(_translate("Form", "Speed"))
         self.pushButtonRevers.setText(_translate("Form", "Revers"))
         self.pushButtonStart.setText(_translate("Form", "Start"))
-        self.pushButtonHome.setText(_translate("Form", "Домой"))
-        self.pushButtonStartTimer.setText(_translate("Form", "Таймер"))
-        self.pushButtonBackward.setText(_translate("Form", "Назад"))
-        self.pushButtonStop.setText(_translate("Form", "Стоп"))
-        self.pushButtonForward.setText(_translate("Form", "Вперед"))
+        self.pushButtonHome.setText(_translate("Form", "Home"))
+        self.pushButtonStartTimer.setText(_translate("Form", "Timer"))
+        self.pushButtonBackward.setText(_translate("Form", "Back"))
+        self.pushButtonStop.setText(_translate("Form", "Stop"))
+        self.pushButtonForward.setText(_translate("Form", "Forth"))
         self.lb.setText(_translate("Form", "Что нажал: "))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabControl), _translate("Form", "Управление"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("Form", "Опытный"))
@@ -1226,4 +1224,5 @@ class Ui_Form(object):
         self.checkApiReq.setText(_translate("Form", "Заупскать при старте"))
         self.addSettings.setTabText(self.addSettings.indexOf(self.tabApi), _translate("Form", "API"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabSettings), _translate("Form", "Настройки"))
+
 import source_rc
