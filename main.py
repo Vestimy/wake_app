@@ -416,12 +416,7 @@ class mywindow(QtWidgets.QWidget):
         self.config.setApiIp(self.ui.ipEdit.text())
         self.config.setApiPort(self.ui.portEdit.text())
 
-        # def ApiStart(self):
         self.sock = classSocketServer.Server(self.api_ip, self.api_port)
-        # if self.sock.errors:
-        #     self.sock.running = True
-        #     self.sock.setB(True)
-        #     self.sock.start()
 
         self.ui.labelApiRun.setText("Сервер запущен")
 
@@ -443,7 +438,6 @@ class mywindow(QtWidgets.QWidget):
     def closeEvent(self, QCloseEvent):
         print("Стоп сервер")
         self.sock.terminate()
-        # self.sock.stop_server()
 
 
 if __name__ == "__main__":
