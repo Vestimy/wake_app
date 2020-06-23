@@ -897,7 +897,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
                </size>
               </property>
               <property name="text">
-               <string>Back</string>
+               <string>Backward</string>
               </property>
              </widget>
             </item>
@@ -934,8 +934,11 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
                 <height>75</height>
                </size>
               </property>
+              <property name="mouseTracking">
+               <bool>false</bool>
+              </property>
               <property name="text">
-               <string>Forth</string>
+               <string>Forward</string>
               </property>
              </widget>
             </item>
