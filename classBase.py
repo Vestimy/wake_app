@@ -1,15 +1,19 @@
 import sys, configparser, serial, glob
+
 if sys.platform.startswith('linux'):
     import evdev
 
 path = "config/config.ini"
 pathWake = "config/wake.ini"
 pathModbus = "config/modbus.ini"
+
+
 class getModBus():
     def __init__(self):
         self.config = configparser.ConfigParser()
         self.config.read(pathModbus)
-    def getParametrs(self, var1, var2, value = None):
+
+    def getParametrs(self, var1, var2, value=None):
         if var1:
             if var2 == "lbSetFrequency":
                 return self.config.get("OPTIONS", "lbSetFrequency")
@@ -78,8 +82,10 @@ class getModBus():
                 self.config.set("OPTIONS", "version", value)
             with open(pathModbus, "w") as config_file:
                 self.config.write(config_file)
+
+
 class getConfiguration():
-    def getSetings(self, variable1,variable2,variable3=None):
+    def getSetings(self, variable1, variable2, variable3=None):
         config = configparser.ConfigParser()
         config.read(path)
         if variable1:
@@ -97,8 +103,6 @@ class getConfiguration():
                 return config.getint('DEFAULT', 'adress')
             elif variable2 == 'ModORSer':
                 return config.getboolean('DEFAULT', 'ModORSer')
-            # elif variable2 == 'printCheck':
-            #     return config.getboolean('DEFAULT', 'in_win')
             elif variable2 == 'checkWindow':
                 if config.getboolean('DEFAULT', 'in_win'):
                     return True
@@ -125,21 +129,23 @@ class getConfiguration():
                     config.set('DEFAULT', 'modorser', 'False')
             with open(path, "w") as config_file:
                 config.write(config_file)
+
     def getSettingsWake(self, variable1, variable2, variable3=None):
         config = configparser.ConfigParser()
         config.read(path)
         if variable1:
             if variable2 == 'getSetTime':
-               return config.get('WAKE_SETTINGS', 'set_time')
+                return config.get('WAKE_SETTINGS', 'set_time')
             if variable2 == 'getSetTime2':
-               return config.get('WAKE_SETTINGS', 'set_time2')
+                return config.get('WAKE_SETTINGS', 'set_time2')
         else:
             if variable2 == 'saveSetTime':
                 config.set('WAKE_SETTINGS', 'set_time', variable3)
             if variable2 == 'saveSetTime2':
                 config.set('WAKE_SETTINGS', 'set_time2', variable3)
             with open(path, "w") as config_file:
-                config.write(config_file)    
+                config.write(config_file)
+
     def serial_portss(self):
         """ Lists serial port names
 
@@ -167,6 +173,7 @@ class getConfiguration():
             except (OSError, serial.SerialException):
                 pass
         return result
+
     def wakeControl(self):
         if sys.platform.startswith('linux'):
             controlwake = ["None"]
@@ -178,7 +185,7 @@ class getConfiguration():
 
 
 class getWakeControl():
-    def getWakeControlSet(Self, Var1, Var2, Var3 = None):
+    def getWakeControlSet(Self, Var1, Var2, Var3=None):
         config = configparser.ConfigParser()
         config.read(pathWake)
         if Var1:
@@ -192,7 +199,8 @@ class getWakeControl():
                     config.set('WakeRecord', 'record', 'False')
             with open(pathWake, "w") as config_file:
                 config.write(config_file)
-    def getKeyControl(self, Var1, Var2, Var3 = None):
+
+    def getKeyControl(self, Var1, Var2, Var3=None):
         config = configparser.ConfigParser()
         config.read(pathWake)
         if Var1:
@@ -235,4 +243,3 @@ class getWakeControl():
                 config.set("KeyWake", "keyStart", Var3)
             with open(pathWake, "w") as config_file:
                 config.write(config_file)
-

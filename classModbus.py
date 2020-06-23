@@ -1,5 +1,6 @@
 import minimalmodbus, classConfig
 
+
 class classModbus(minimalmodbus.Instrument):
     def __init__(self, portname, slaveaddress):
         self.config = classConfig.Config()
@@ -12,9 +13,11 @@ class classModbus(minimalmodbus.Instrument):
             print(e)
         else:
             self.serial.baudrate = self.config.getModbusSpeed()
+
     def speed(self):
 
         self.serial.baudrate = self.config.getModbusSpeed()
+
     def get_pv_loop1(self):
         """Return the process value (PV) for loop1."""
         return self.read_register(289, 1)
@@ -38,6 +41,7 @@ class classModbus(minimalmodbus.Instrument):
         except Exception as e:
             print("ошибка SetHome")
             print(e)
+
     def setForward(self):
         try:
             self.write_register(8192, 4)
@@ -105,20 +109,23 @@ class classModbus(minimalmodbus.Instrument):
             print("Failed to read from instrument")
         except Exception:
             print("Ошибка")
+
     def mymap(self, x, in_min, in_max, out_min, out_max):
         return int((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
+
     def speedConvert(self, value):
         x = float(value) * 16.6667
         x = x / (2 * 3.14 * 0.1)
         val = self.mymap(x, 1, 1485, 1, 500)
         return int(val)
-        #'''
-        #V = 2 * π * R * n, где
+        # '''
+        # V = 2 * π * R * n, где
         # V - линейная скорость;
         # R - радиус окружности;
         # n - угловая скорость.
         # D = 2 * R
         # '''
+
     def getUpdateAll(self):
         lbSetFrequency = str(self.read_register(1))
         lbOutputFrequency = str(self.read_register(2))
@@ -137,5 +144,7 @@ class classModbus(minimalmodbus.Instrument):
         lbErrorCurrent = str(self.read_register(17))
         lbErrorOutVoltage = str(self.read_register(18))
         version = str(self.read_register(50))
-        new = [lbSetFrequency, lbOutputFrequency,lbRotationalSpeed, lbOperatingHoursCounter, lbFeedbackPidMode, lbDCBusVoltage, lbOutputCurrent, lbErrorRecord1, lbErrorRecord2, lbErrorRecord3, lbErrorRecord4, lbErrorFreq, lbErrorOutFreq, lbErrorCurrent, lbErrorOutVoltage]
+        new = [lbSetFrequency, lbOutputFrequency, lbRotationalSpeed, lbOperatingHoursCounter, lbFeedbackPidMode,
+               lbDCBusVoltage, lbOutputCurrent, lbErrorRecord1, lbErrorRecord2, lbErrorRecord3, lbErrorRecord4,
+               lbErrorFreq, lbErrorOutFreq, lbErrorCurrent, lbErrorOutVoltage]
         return new

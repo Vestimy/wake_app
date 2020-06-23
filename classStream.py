@@ -1,22 +1,21 @@
-import sys, os, time, datetime, configparser, serial, glob
-from PyQt5.QtCore import Qt, QTimer, QTime
-from PyQt5 import QtWidgets,QtCore
-from wake import Ui_Form  # импорт нашего сгенерированного файла
-from login import Ui_Login_Form
+import datetime
+from PyQt5 import QtCore
 from classBase import *
-#from game import *
-import source_rc
-import locale
-#Подключение библиотеку для работы с Джойстиком в линукс
+
+# from game import *
+# Подключение библиотеку для работы с Джойстиком в линукс
 if sys.platform.startswith('linux'):
     from evdev import InputDevice, categorize, ecodes
     import evdev
 
+
 class myTimer(QtCore.QThread):
     timerSignal = QtCore.pyqtSignal(str)
+
     def __init__(self, parent=None):
         QtCore.QThread.__init__(self, parent)
         self.getTimer = getConfiguration()
+
     def run(self):
         self.timerMinutes = self.getTimerMinutes()
         # self.timer = datetime.datetime.strptime('00:'+self.timerMinutes+':01', '%H:%M:%S')
@@ -24,29 +23,35 @@ class myTimer(QtCore.QThread):
         self.running = True
         while self.running:
             self.timer = self.timer - datetime.timedelta(seconds=1)
-            self.timerSignal.emit("%s" %self.timer)
+            self.timerSignal.emit("%s" % self.timer)
             self.sleep(1)
             if self.timer == datetime.datetime.strptime('00:00:00', '%H:%M:%S'):
                 self.running = False
+
     def getTimerMinutes(self):
         self.timerMinutes = self.getTimer.getSettingsWake(True, "getSetTime")
         # self.timerMinutes2 = self.getTimer.getSettingsWake(True, "getSetTime2")
         return self.timerMinutes
+
     def getTimerRest(self):
         self.timer = datetime.datetime.strptime('00:00:00', '%H:%M:%S')
-        self.timerSignal.emit("%s" %self.timer)
+        self.timerSignal.emit("%s" % self.timer)
+
 
 class myGamepad(QtCore.QThread):
     mysignal = QtCore.pyqtSignal(str)
     myerror = QtCore.pyqtSignal(str)
     keyRecord = QtCore.pyqtSignal(str)
+
     def __init__(self, path):
         QtCore.QThread.__init__(self)
         self.game = evdev.InputDevice(path)
         self.getWakecontrol = getWakeControl()
         self.keyPress = dict()
+
     def checkrun(self):
         self.start()
+
     def loadKey(self):
         self.keyForward = self.getWakecontrol.getKeyControl(True, 'recordButtonForward')
         self.keyBackward = self.getWakecontrol.getKeyControl(True, 'recordButtonBackward')
@@ -57,6 +62,7 @@ class myGamepad(QtCore.QThread):
         self.keySpeedDown = self.getWakecontrol.getKeyControl(True, 'recordButtonSpeedDown')
         self.keyRevers = self.getWakecontrol.getKeyControl(True, "recordButtonRevers")
         self.keyStart = self.getWakecontrol.getKeyControl(True, "recordButtonStart")
+
     def run(self):
         self.running = True
         self.record = True
@@ -179,8 +185,6 @@ class myGamepad(QtCore.QThread):
                             self.keyRecord.emit(key)
                             print(key)
 
-
-
         #
-                                # print(event.code)
-                                # if event.code == int(self.keyPress["xbtn"]):
+        # print(event.code)
+        # if event.code == int(self.keyPress["xbtn"]):

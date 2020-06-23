@@ -1,15 +1,15 @@
 import sys, time, datetime, evdev, locale, classBase, classStream
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5 import QtWidgets, QtCore
-from wake import Ui_Form  # импорт нашего сгенерированного файла
-from login import Ui_Login_Form
-from classServer_socket import Queue
+from app_main.wake import Ui_Form  # импорт сгенерированного файла из QtDesigner
+from app_main.login import Ui_Login_Form  # импорт сгенерированного файла из QtDesigner
+from module.classModuleSocket import Server
+
 # Подключение библиотеку для работы с Джойстиком в линукс
 path = "config/config.ini"
 pathWake = "config/wake.ini"
 pathModbus = "config/modbus.ini"
 import classModbus, classConfig
-import classSocketServer
 
 
 # Окно аутентификации
@@ -29,7 +29,6 @@ class LoginDialog(QtWidgets.QDialog, Ui_Login_Form, classConfig.Config):
         if passw == "":
             self.login.lcheck.setText("Введите пароль!")
         else:
-            # if self.login.login.getSetings(True,'getPassword',self.login.lineEdit_Pass.text()):
             if self.config.getPassword(passw):
                 self.accept()
             else:
@@ -54,14 +53,13 @@ class mywindow(QtWidgets.QWidget):
         self.modbusAdress = [str(i) for i in range(1, 246)]
 
         self.checkRec = None
-
-        self.sock = Queue('', 8889)
-
-        self.sock.start_server()
+        ###############################################################
+        #   Соккет сервер
+        ###############################################################
+        self.sock = Server('')
         self.sock.start()
-        # self.run_SocketServer()
 
-        # self.runControl()
+        ###############################################################
         self.pathverificationcontrol()
         self.ui.getSettingsTimeSet = classBase.getConfiguration()
         self.ui.timetime = self.ui.getSettingsTimeSet.getSettingsWake(True, "getSetTime")
@@ -69,26 +67,15 @@ class mywindow(QtWidgets.QWidget):
 
         self.ui.speedWake = self.ui.spinBox.value()
 
-        # self.sock = classSocket.mySocket()
-        # self.sock.start()
         self.api_ip = self.config.getApiIp()
         self.api_port = self.config.getApiPort()
         self.ui.ipEdit.setText(self.api_ip)
         self.ui.portEdit.setText(str(self.api_port))
-        # self.sock = classSocketServer.Server(self.api_ip, self.api_port)
-        # self.sock.start_server()
 
-        # self.sock.start()
-
-        # self.sock.running = False
-        # self.sock.terminate()
-        # print(self.sock.isRunning())
         self.sock.socketsignal.connect(self.on_change2, QtCore.Qt.QueuedConnection)
 
         self.ui.checkApiReq.setChecked(self.config.getApiReq())
         self.ui.checkApiReq.stateChanged.connect(self.requestApi)
-        # if self.config.getApiReq():
-            # self.ApiStart()
 
         self.ui.horizontalSlider.valueChanged['int'].connect(self.horSlide)
         self.ui.spinBox.valueChanged['int'].connect(self.ui.horizontalSlider.setValue)
@@ -134,7 +121,6 @@ class mywindow(QtWidgets.QWidget):
         self.path = self.config.getModbusPort()
         self.slaveadress = self.config.getModbusSlaveAddress()
         self.ui.modbus = classModbus.classModbus(self.path, self.slaveadress)
-        # self.ui.modbus = classModbus.classModbus(self.ui.check.getSetings(True,'getComPort'),self.ui.check.getSetings(True,'getAdress'))
 
         # Вызывает галочка спрашивать пин код при входе, проверка из файла my_class
         self.ui.requestPassword.setChecked(self.config.getRequestPassword())
@@ -147,15 +133,6 @@ class mywindow(QtWidgets.QWidget):
         self.ui.Adress.addItems(self.modbusAdress)
         self.ui.Adress.setCurrentText(str(self.config.getModbusSlaveAddress()))
         self.ui.Adress.activated[str].connect(self.modbusadress)
-        #        self.ui.getPort.setText(self.ui.check.getSetings(True, 'getComPort', None))
-        #       self.ui.getSpeed.setText(self.ui.check.getSetings(True, 'getSpeed', None))
-        ###############################################################
-        # if self.ui.modbus.serial != None:
-        # self.ui.modbus.serial.baudrate = self.ui.check.getSetings(True, 'getSpeed', None)
-        ###############################################################
-        # self.ui.timeSetEdit.setText(self.ui.check.getSettingsWake(True, 'getSetTime'))
-
-        # self.ui.spinBox.setProperty("value", self.ui.speedWake)
 
         # Все связаное с датой
         self.ui.lcdTimer.setNumDigits(8)
@@ -174,24 +151,19 @@ class mywindow(QtWidgets.QWidget):
         self.ui.horizontalSlider.setValue(value)
         self.ui.modbus.setSpeed(value)
 
-    # self.ui.horizontalSlider.valueChanged['int'].connect(self.ui.spinBox.setValue)
-    # self.ui.spinBox.valueChanged['int'].connect(self.ui.horizontalSlider.setValue)
-    #####################################################################
-    # def run_SocketServer(self):
+    def runControl(self, value):
+        if value is not None:
+            if self.controlrun:
+                self.ui.buttonGame = classStream.myGamepad(value)
+                self.ui.buttonGame.checkrun()
+                self.ui.buttonGame.mysignal.connect(self.on_change2, QtCore.Qt.QueuedConnection)
+                self.ui.buttonGame.myerror.connect(self.errorSearch, QtCore.Qt.QueuedConnection)
+                self.ui.buttonGame.keyRecord.connect(self.keyRecord, QtCore.Qt.QueuedConnection)
+                self.controlrun = False
 
-        def runControl(self, value):
-            if value is not None:
-                if self.controlrun:
-                    self.ui.buttonGame = classStream.myGamepad(value)
-                    self.ui.buttonGame.checkrun()
-                    self.ui.buttonGame.mysignal.connect(self.on_change2, QtCore.Qt.QueuedConnection)
-                    self.ui.buttonGame.myerror.connect(self.errorSearch, QtCore.Qt.QueuedConnection)
-                    self.ui.buttonGame.keyRecord.connect(self.keyRecord, QtCore.Qt.QueuedConnection)
-                    self.controlrun = False
-
-                    self.checkRec = True
-                else:
-                    pass
+                self.checkRec = True
+            else:
+                pass
 
     def pathverificationcontrol(self):
         name = self.config.getControlName()
@@ -409,7 +381,6 @@ class mywindow(QtWidgets.QWidget):
     def changePassword(self):
         passw = self.ui.passwordEdit.text()
         if passw != "":
-            # self.ui.check.getSetings(False, 'editPassword', pin)
             self.config.setPassword(passw)
 
     def requestPassword(self, state):
@@ -445,7 +416,7 @@ class mywindow(QtWidgets.QWidget):
         self.config.setApiIp(self.ui.ipEdit.text())
         self.config.setApiPort(self.ui.portEdit.text())
 
-    # def ApiStart(self):
+        # def ApiStart(self):
         self.sock = classSocketServer.Server(self.api_ip, self.api_port)
         # if self.sock.errors:
         #     self.sock.running = True
@@ -460,7 +431,6 @@ class mywindow(QtWidgets.QWidget):
         self.sock.running = False
         self.sock.stops()
         self.ui.labelApiRun.setText("Сервер остановлен")
-        # self.sock.setB(0.5)
 
         print(self.sock.isRunning())
 
@@ -469,11 +439,12 @@ class mywindow(QtWidgets.QWidget):
             self.config.setApiReq("True")
         else:
             self.config.setApiReq("False")
+
     def closeEvent(self, QCloseEvent):
         print("Стоп сервер")
-        self.sock.check_test()
-        self.sock.stop_server()
+        self.sock.terminate()
         # self.sock.stop_server()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
