@@ -35,7 +35,7 @@ class Ui_Form(object):
 "#topPanel { background-color: qlineargradient(spread:reflect, x1:0.5, y1:0, x2:0, y2:0, stop:0 rgba(91, 204, 233, 100), stop:1 rgba(32, 80, 96, 100));\n"
 "}\n"
 "\n"
-"#tabControl, #tabSettings,#tabMeasurements {\n"
+"#tabControl, #tabSettings,#tabMeasurements, #tab_4 {\n"
 "background: rgba(32, 80, 96, 100); \n"
 "background-image: url(:/images/logo_new.png) repeat-y;\n"
 "background-repeat: no-repeat ;\n"
@@ -155,6 +155,7 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
         self.tabWidget.setSizePolicy(sizePolicy)
+        self.tabWidget.setAutoFillBackground(False)
         self.tabWidget.setStyleSheet("QTabWidget::pane {\n"
 "    border: 1px solid black;\n"
 "    background: white;\n"
@@ -1131,7 +1132,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         self.tabWidget.setCurrentIndex(0)
-        self.addSettings.setCurrentIndex(0)
+        self.addSettings.setCurrentIndex(4)
         self.shutdownButton.clicked.connect(Form.close)
         QtCore.QMetaObject.connectSlotsByName(Form)
 

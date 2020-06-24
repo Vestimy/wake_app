@@ -405,6 +405,8 @@ class mywindow(QtWidgets.QWidget):
 
         text, ok = QtWidgets.QInputDialog.getText(self, 'Окно заблокировано',
                                                   'Введите парль:')
+        print(text)
+        print(ok)
         if ok:
             pasw = self.config.getPassword(text)
             if not pasw:
