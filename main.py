@@ -426,7 +426,6 @@ class mywindow(QtWidgets.QWidget):
 
     def ApiStop(self):
         self.sock.running = False
-        self.sock.stops()
         self.ui.labelApiRun.setText("Сервер остановлен")
 
         print(self.sock.isRunning())

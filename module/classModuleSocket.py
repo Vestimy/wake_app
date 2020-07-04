@@ -45,6 +45,7 @@ class Server(QThread):
             self.sock_client.remove(client_socket)
 
     def remove_socket(self, client_socket):
+        client_socket.send(b'')
         self.to_monitor.remove(client_socket)
         client_socket.close()
 
@@ -57,6 +58,7 @@ class Server(QThread):
             if request == self.reads[0] and client_socket not in self.sock_client:
                 self.register_client(msg, client_socket)
             else:
+
                 self.remove_socket(client_socket)
                 print('пытаются взломать')
 
