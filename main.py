@@ -6,7 +6,7 @@ from app_main.login import Ui_Login_Form  # импорт сгенерирова�
 from module.classModuleSocket import Server
 
 # Подключение библиотеку для работы с Джойстиком в линукс
-path = "config/config.ini"
+path = "config/config2.ini"
 pathWake = "config/wake.ini"
 pathModbus = "config/modbus.ini"
 import classModbus, classConfig

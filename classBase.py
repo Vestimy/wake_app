@@ -186,7 +186,7 @@ class getConfiguration():
 class getWakeControl():
     def getWakeControlSet(Self, Var1, Var2, Var3=None):
         config = configparser.ConfigParser()
-        config.read(pathWake)
+        config.read(path)
         if Var1:
             if Var2 == 'getRecord':
                 return config.getboolean('WakeRecord', 'record')
@@ -196,12 +196,12 @@ class getWakeControl():
                     config.set('WakeRecord', 'record', 'True')
                 else:
                     config.set('WakeRecord', 'record', 'False')
-            with open(pathWake, "w") as config_file:
+            with open(path, "w") as config_file:
                 config.write(config_file)
 
     def getKeyControl(self, Var1, Var2, Var3=None):
         config = configparser.ConfigParser()
-        config.read(pathWake)
+        config.read(path)
         if Var1:
             if Var2 == "recordButtonForward":
                 return config.getint('KeyWake', 'keyForward')
@@ -240,5 +240,5 @@ class getWakeControl():
                 config.set("KeyWake", "keyRevers", Var3)
             elif Var2 == "recordButtonStart":
                 config.set("KeyWake", "keyStart", Var3)
-            with open(pathWake, "w") as config_file:
+            with open(path, "w") as config_file:
                 config.write(config_file)

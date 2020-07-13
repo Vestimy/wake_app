@@ -1,6 +1,6 @@
 import configparser, serial, glob, os, sys
 
-path = "config/config.ini"
+path = "config/config2.ini"
 pathWake = "config/wake.ini"
 pathModbus = "config/modbus.ini"
 
@@ -10,20 +10,60 @@ class Config():
         self.config = configparser.ConfigParser()
         self.path = "config/config.ini"
         self.LoadPath()
+
         # self.config.read(self.path)
 
     def LoadPath(self):
-        if os.path.isfile(self.path):
-            self.config.read(self.path)
+        if os.path.isdir("config"):
+            if os.path.isfile(self.path):
+                self.config.read(self.path)
+            else:
+                self.createConfig()
+                self.LoadPath()
         else:
-            self.createConfig()
+            os.mkdir('config')
             self.LoadPath()
 
     ############################################################################
     #           Надо СДЕЛАТЬ!!!!!!!!!!!
     #######################################################################
     def createConfig(self):
-        self.config.config['DEFAULT'] = {'ServerAliveInterval': '45', 'Compression': 'yes', 'CompressionLevel': '9'}
+        self.config['DEFAULT'] = {'password': '1234',
+                                  'requestpass': 'False',
+                                  'port': '/dev/ttyS0',
+                                  'speed': '19200',
+                                  'adress': '1'}
+
+        self.config['MODBUS'] = {"portname": "/dev/ttyS0",
+                                 "speed": "19200",
+                                 "slaveaddress": "1"}
+
+        self.config['WAKE_SETTINGS'] = {"set_time": "00:10:00",
+                                        "set_time2": "00:10:00"
+                                        }
+        self.config['CONTROL'] = {"name": "USB Controller",
+                                  "path": "/dev/input/event5"
+                                  }
+
+        self.config['API'] = {"ip": "localhost",
+                              "port": "1802",
+                              "req": "True"
+                              }
+
+        self.config['WakeRecord'] = {"record": "True",
+                                     }
+
+        self.config['KeyWake'] = {"keyforward": "289",
+                                  "keybackward": "290",
+                                  "keystop": "288",
+                                  "keyhome": "291",
+                                  "keyspeedup": "293",
+                                  "keyspeeddown": "292",
+                                  "keystarttimer": "297",
+                                  "keyrevers": "294",
+                                  "keystart": "295"
+                                  }
+
         self.write()
 
     def write(self):
