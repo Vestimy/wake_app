@@ -7,7 +7,6 @@ path = "config/config.ini"
 pathWake = "config/wake.ini"
 pathModbus = "config/modbus.ini"
 
-
 class getModBus():
     def __init__(self):
         self.config = configparser.ConfigParser()
