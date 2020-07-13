@@ -11,8 +11,6 @@ class Config():
         self.path = "config/config.ini"
         self.LoadPath()
 
-        # self.config.read(self.path)
-
     def LoadPath(self):
         if os.path.isdir("config"):
             if os.path.isfile(self.path):

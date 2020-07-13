@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'style/wake.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -42,7 +44,7 @@ class Ui_Form(object):
 "background-position: center;\n"
 "}\n"
 "\n"
-"#tabWakePark, #tabApplication,#tabComPort,#tabControlWake, #tabModbus, #tabApi{\n"
+"#tabWakePark, #tabApplication,#tabComPort,#tabControlWake, #tabModbus, #tabApi, #tabUsers{\n"
 "background: rgba(32, 80, 96, 100); \n"
 "}\n"
 "\n"
@@ -1121,7 +1123,25 @@ class Ui_Form(object):
         self.checkApiReq = QtWidgets.QCheckBox(self.tabApi)
         self.checkApiReq.setGeometry(QtCore.QRect(20, 100, 181, 23))
         self.checkApiReq.setObjectName("checkApiReq")
+        self.pushButtonAddUser = QtWidgets.QPushButton(self.tabApi)
+        self.pushButtonAddUser.setGeometry(QtCore.QRect(480, 150, 231, 25))
+        self.pushButtonAddUser.setObjectName("pushButtonAddUser")
+        self.lineEdit = QtWidgets.QLineEdit(self.tabApi)
+        self.lineEdit.setGeometry(QtCore.QRect(480, 50, 231, 25))
+        self.lineEdit.setObjectName("lineEdit")
+        self.lineEdit_2 = QtWidgets.QLineEdit(self.tabApi)
+        self.lineEdit_2.setGeometry(QtCore.QRect(480, 110, 231, 25))
+        self.lineEdit_2.setObjectName("lineEdit_2")
+        self.label_13 = QtWidgets.QLabel(self.tabApi)
+        self.label_13.setGeometry(QtCore.QRect(480, 30, 67, 17))
+        self.label_13.setObjectName("label_13")
+        self.label_15 = QtWidgets.QLabel(self.tabApi)
+        self.label_15.setGeometry(QtCore.QRect(480, 90, 67, 17))
+        self.label_15.setObjectName("label_15")
         self.addSettings.addTab(self.tabApi, "")
+        self.tabUsers = QtWidgets.QWidget()
+        self.tabUsers.setObjectName("tabUsers")
+        self.addSettings.addTab(self.tabUsers, "")
         self.verticalLayout_7.addWidget(self.addSettings)
         self.tabWidget.addTab(self.tabSettings, "")
         self.verticalLayout_2.addWidget(self.tabWidget)
@@ -1132,7 +1152,7 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         self.tabWidget.setCurrentIndex(0)
-        self.addSettings.setCurrentIndex(4)
+        self.addSettings.setCurrentIndex(0)
         self.shutdownButton.clicked.connect(Form.close)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -1224,7 +1244,10 @@ class Ui_Form(object):
         self.pushButtonApiStop.setText(_translate("Form", "Остановить"))
         self.label_12.setText(_translate("Form", "Статус"))
         self.checkApiReq.setText(_translate("Form", "Заупскать при старте"))
+        self.pushButtonAddUser.setText(_translate("Form", "Добавить пользователя"))
+        self.label_13.setText(_translate("Form", "Логин"))
+        self.label_15.setText(_translate("Form", "Пароль"))
         self.addSettings.setTabText(self.addSettings.indexOf(self.tabApi), _translate("Form", "API"))
+        self.addSettings.setTabText(self.addSettings.indexOf(self.tabUsers), _translate("Form", "Страница"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabSettings), _translate("Form", "Настройки"))
-
 import source_rc

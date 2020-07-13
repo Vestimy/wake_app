@@ -63,7 +63,7 @@ background-repeat: no-repeat ;
 background-position: center;
 }
 
-#tabWakePark, #tabApplication,#tabComPort,#tabControlWake, #tabModbus, #tabApi{
+#tabWakePark, #tabApplication,#tabComPort,#tabControlWake, #tabModbus, #tabApi, #tabUsers{
 background: rgba(32, 80, 96, 100); 
 }
 
@@ -1672,7 +1672,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
           <enum>QTabWidget::South</enum>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>0</number>
          </property>
          <property name="usesScrollButtons">
           <bool>true</bool>
@@ -2575,6 +2575,70 @@ color: white; </string>
             <string>Заупскать при старте</string>
            </property>
           </widget>
+          <widget class="QPushButton" name="pushButtonAddUser">
+           <property name="geometry">
+            <rect>
+             <x>480</x>
+             <y>150</y>
+             <width>231</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Добавить пользователя</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit">
+           <property name="geometry">
+            <rect>
+             <x>480</x>
+             <y>50</y>
+             <width>231</width>
+             <height>25</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEdit_2">
+           <property name="geometry">
+            <rect>
+             <x>480</x>
+             <y>110</y>
+             <width>231</width>
+             <height>25</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_13">
+           <property name="geometry">
+            <rect>
+             <x>480</x>
+             <y>30</y>
+             <width>67</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Логин</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_15">
+           <property name="geometry">
+            <rect>
+             <x>480</x>
+             <y>90</y>
+             <width>67</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Пароль</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="tabUsers">
+          <attribute name="title">
+           <string>Страница</string>
+          </attribute>
          </widget>
         </widget>
        </item>
