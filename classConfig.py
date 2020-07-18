@@ -182,3 +182,80 @@ class Config():
     def setApiReq(self, value):
         self.config.set('API', 'req', value)
         self.write()
+
+
+    def getKeyControl(self):
+        control = {}
+        keys = self.config['KeyWake']
+        for key in keys:
+            control[keys[key]] = key
+        return control
+
+
+
+###----------------------------------------------------------------------###
+###----------------Контроллер--------------------------------------------###
+class getWakeControl():
+    def getWakeControlSet(Self, Var1, Var2, Var3=None):
+        config = configparser.ConfigParser()
+        config.read(path)
+        if Var1:
+            if Var2 == 'getRecord':
+                return config.getboolean('WakeRecord', 'record')
+        else:
+            if Var2 == 'setWakeRecord':
+                if True == Var3:
+                    config.set('WakeRecord', 'record', 'True')
+                else:
+                    config.set('WakeRecord', 'record', 'False')
+            with open(path, "w") as config_file:
+                config.write(config_file)
+
+    def getKeyControl(self, Var1, Var2, Var3=None):
+        config = configparser.ConfigParser()
+        config.read(path)
+        if Var1:
+            if Var2 == "recordButtonForward":
+                return config.getint('KeyWake', 'keyForward')
+            elif Var2 == "recordButtonBackward":
+                return config.getint('KeyWake', 'keyBackward')
+            elif Var2 == "recordButtonStop":
+                return config.getint('KeyWake', 'keyStop')
+            elif Var2 == "recordButtonHome":
+                return config.getint('KeyWake', 'keyHome')
+            elif Var2 == "recordButtonStartTimer":
+                return config.getint('KeyWake', 'keyStartTimer')
+            elif Var2 == "recordButtonSpeedUp":
+                return config.getint('KeyWake', 'keySpeedUp')
+            elif Var2 == "recordButtonSpeedDown":
+                return config.getint('KeyWake', 'keySpeedDown')
+            elif Var2 == "recordButtonRevers":
+                return config.getint("KeyWake", "keyRevers")
+            elif Var2 == "recordButtonStart":
+                return config.getint("KeyWake", "keyStart")
+        else:
+            if Var2 == "recordButtonForward":
+                config.set('KeyWake', 'keyForward', Var3)
+            elif Var2 == "recordButtonBackward":
+                config.set('KeyWake', 'keyBackward', Var3)
+            elif Var2 == "recordButtonStop":
+                config.set('KeyWake', 'keyStop', Var3)
+            elif Var2 == "recordButtonHome":
+                config.set('KeyWake', 'keyHome', Var3)
+            elif Var2 == "recordButtonStartTimer":
+                config.set('KeyWake', 'keyStartTimer', Var3)
+            elif Var2 == "recordButtonSpeedUp":
+                config.set('KeyWake', 'keySpeedUp', Var3)
+            elif Var2 == "recordButtonSpeedDown":
+                config.set('KeyWake', 'keySpeedDown', Var3)
+            elif Var2 == "recordButtonRevers":
+                config.set("KeyWake", "keyRevers", Var3)
+            elif Var2 == "recordButtonStart":
+                config.set("KeyWake", "keyStart", Var3)
+            with open(path, "w") as config_file:
+                config.write(config_file)
+
+
+if __name__ == "__main__":
+    config = Config()
+    print(config.getKeyControl())

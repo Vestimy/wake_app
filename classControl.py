@@ -2,43 +2,166 @@ import PyQt5
 import evdev
 import threading
 from PyQt5 import QtCore
-class tControl(PyQt5.QtCore.QThread):
-    # mysignal = PyQt5.QtCore.pyqtSignal(str)
-    # myerror = PyQt5.QtCore.pyqtSignal(str)
-    # keyRecord = PyQt5.QtCore.pyqtSignal(str)
-    def __init__(self, path):
-        PyQt5.QtCore.QThread.__init__(self)
-        self.dev = evdev.InputDevice(path)
-        self.path = path
-    def run(self):
-        self.x = True
-        # while x:
-        #     print(self.path)
-        #     self.sleep(1)
-        for event in self.dev.read_loop():
-            if self.x:
-                if event.type == evdev.ecodes.EV_KEY:
-                    print(evdev.categorize(event))
-                    print(event)
-            else:
-                return None
-
 
 class Control(evdev.InputDevice):
+    mysignal = QtCore.pyqtSignal(str)
+    myerror = QtCore.pyqtSignal(str)
+    keyRecord = QtCore.pyqtSignal(str)
+
     def __init__(self, path):
-        evdev.InputDevice.__init__(self, path)
-        my_thread = threading.Thread(target=self.check,  args=())
-        my_thread.start()
-        # my_thread.join()
-        # print(self)
-        # print("klnvlbfdnlfdn")
-        # self.run()
-    def check(self):
-        for event in self.read_loop():
-            if event.type == evdev.ecodes.EV_KEY:
-                print(evdev.categorize(event))
-                print(event)
-            # elif event.type == evdev.ecodes.EV_ABS:
-            #     absevent = evdev.categorize(event)
-            #     print(absevent)
-            #     print(evdev.ecodes.bytype[absevent.event.type][absevent.event.code])
+        QtCore.QThread.__init__(self)
+        self.game = evdev.InputDevice(path)
+        self.getWakecontrol = getWakeControl()
+        self.keyPress = dict()
+
+    def checkrun(self):
+        self.start()
+
+    def loadKey(self):
+        self.keyForward = self.getWakecontrol.getKeyControl(True, 'recordButtonForward')
+        self.keyBackward = self.getWakecontrol.getKeyControl(True, 'recordButtonBackward')
+        self.keyStop = self.getWakecontrol.getKeyControl(True, 'recordButtonStop')
+        self.keyHome = self.getWakecontrol.getKeyControl(True, 'recordButtonHome')
+        self.keyStartTimer = self.getWakecontrol.getKeyControl(True, 'recordButtonStartTimer')
+        self.keySpeedUp = self.getWakecontrol.getKeyControl(True, 'recordButtonSpeedUp')
+        self.keySpeedDown = self.getWakecontrol.getKeyControl(True, 'recordButtonSpeedDown')
+        self.keyRevers = self.getWakecontrol.getKeyControl(True, "recordButtonRevers")
+        self.keyStart = self.getWakecontrol.getKeyControl(True, "recordButtonStart")
+        return self.config.getKeyControl()
+
+
+
+    def run(self):
+        self.running = True
+        self.record = True
+        self.load = True
+        if self.game:
+            for event in self.game.read_loop():
+                if self.record:
+                    if self.load:
+                        self.loadKey()
+                        keys = self.loadKey()
+                        self.load = False
+                    if event.type == ecodes.EV_KEY:
+                        if event.value == 1:
+                            for key in keys:
+                                if event.code == key:
+                                    self.mysignal.emit(keys[key])
+                            if event.code == self.keyForward:
+                                self.mysignal.emit("keyForward")
+                            elif event.code == self.keyBackward:
+                                self.mysignal.emit("keyBackward")
+                            elif event.code == self.keyStop:
+                                self.mysignal.emit("keyStop")
+                            elif event.code == self.keyHome:
+                                self.mysignal.emit("keyHome")
+                            elif event.code == self.keyStartTimer:
+                                self.mysignal.emit("keyStartTimer")
+                            elif event.code == self.keySpeedUp:
+                                self.mysignal.emit("keySpeedUp")
+                            elif event.code == self.keySpeedDown:
+                                self.mysignal.emit("keySpeedDown")
+                            elif event.code == self.keyRevers:
+                                self.mysignal.emit("keyRevers")
+                            elif event.code == self.keyStart:
+                                self.mysignal.emit("keyStart")
+                            else:
+                                pass
+                        # elif event.value == 0:
+                        #     if event.code == xBtn:
+                        #         print("X button not pressed")
+                        #     elif event.code == bBtn:
+                        #         print("B button not pressed")
+                        #     elif event.code == aBtn:
+                        #         print("A button not pressed")
+                        #     elif event.code == yBtn:
+                        #         print("Y button not pressed")
+                        #     elif event.code == lBtn:
+                        #         print("LEFT button not pressed")
+                        #     elif event.code == rBtn:
+                        #         print("RIGHT button not pressed")
+                        #     elif event.code == lsBtn:
+                        #         print("LEFT Shift button not pressed")
+                        #     elif event.code == rsBtn:
+                        #         print("RIGHT Shift button not pressed")
+                        #     elif event.code == selBtn:
+                        #         print("Select button not pressed")
+                        #     elif event.code == staBtn:
+                        #         print("Start button not pressed")
+                        #     elif event.code == lanalogBtn:
+                        #         print("Analog Left BTN button not pressed")
+                        #     elif event.code == ranalogBtn:
+                        #         print("Analog Right BTN button not pressed")
+                    elif event.type == ecodes.EV_ABS:
+                        absevent = categorize(event)
+                        # print ecodes.bytype[absevent.event.type][absevent.event.code], absevent.event.value
+                        if ecodes.bytype[absevent.event.type][absevent.event.code] == "ABS_X":
+                            if absevent.event.value < 128:
+                                print("Gauche | Left")
+                                print(absevent.event.value)
+                            elif absevent.event.value > 128:
+                                print("Droite | Right")
+                                print(absevent.event.value)
+                            elif absevent.event.value == 128:
+                                print("Left | Center")
+                                print(absevent.event.value)
+                        elif ecodes.bytype[absevent.event.type][absevent.event.code] == "ABS_Y":
+                            if absevent.event.value < 128:
+                                print("Haut | Up")
+                                print(absevent.event.value)
+                            elif absevent.event.value > 128:
+                                print("Bas | Down")
+                                print(absevent.event.value)
+                            elif absevent.event.value == 128:
+                                print("Left | Center")
+                                print(absevent.event.value)
+                        elif ecodes.bytype[absevent.event.type][absevent.event.code] == "ABS_Z":
+                            if absevent.event.value < 128:
+                                print("Right | Up")
+                            elif absevent.event.value > 128:
+                                print("Right | Down")
+                            elif absevent.event.value == 128:
+                                print("Right | Center")
+                        elif ecodes.bytype[absevent.event.type][absevent.event.code] == "ABS_RZ":
+                            if absevent.event.value < 128:
+                                print("Right | Left")
+                            elif absevent.event.value > 128:
+                                print("Right | Right")
+                            elif absevent.event.value == 128:
+                                print("Right | Center")
+                        elif ecodes.bytype[absevent.event.type][absevent.event.code] == "ABS_HAT0Y":
+                            if absevent.event.value == 0:
+                                print("Center")
+                            elif absevent.event.value == -1:
+                                print("Up")
+                            elif absevent.event.value == 1:
+                                print("Down")
+                        elif ecodes.bytype[absevent.event.type][absevent.event.code] == "ABS_HAT0X":
+                            if absevent.event.value == 0:
+                                print("Center")
+                            elif absevent.event.value == -1:
+                                print("Left")
+                            elif absevent.event.value == 1:
+                                print("Right")
+                else:
+                    if not self.load:
+                        self.load = True
+                    if event.type == ecodes.EV_KEY:
+                        if event.value == 1:
+                            key = str(event.code)
+                            print(key)
+                            self.keyRecord.emit(key)
+                        elif event.type == ecodes.EV_ABS:
+                            absevent = categorize(event)
+                            key = str(ecodes.bytype[absevent.event.type][absevent.event.code])
+                            self.keyRecord.emit(key)
+                            print(key)
+
+        #
+        # print(event.code)
+        # if event.code == int(self.keyPress["xbtn"]):
+
+
+
+if __name__ == '__main__':
+    control = Control()

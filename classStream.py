@@ -1,6 +1,7 @@
 import datetime
 from PyQt5 import QtCore
 from classBase import *
+from classConfig import Config
 
 # from game import *
 # Подключение библиотеку для работы с Джойстиком в линукс
@@ -15,6 +16,7 @@ class myTimer(QtCore.QThread):
     def __init__(self, parent=None):
         QtCore.QThread.__init__(self, parent)
         self.getTimer = getConfiguration()
+        self.config = Config()
 
     def run(self):
         self.timerMinutes = self.getTimerMinutes()
@@ -53,6 +55,8 @@ class myGamepad(QtCore.QThread):
         self.start()
 
     def loadKey(self):
+
+
         self.keyForward = self.getWakecontrol.getKeyControl(True, 'recordButtonForward')
         self.keyBackward = self.getWakecontrol.getKeyControl(True, 'recordButtonBackward')
         self.keyStop = self.getWakecontrol.getKeyControl(True, 'recordButtonStop')
@@ -62,6 +66,7 @@ class myGamepad(QtCore.QThread):
         self.keySpeedDown = self.getWakecontrol.getKeyControl(True, 'recordButtonSpeedDown')
         self.keyRevers = self.getWakecontrol.getKeyControl(True, "recordButtonRevers")
         self.keyStart = self.getWakecontrol.getKeyControl(True, "recordButtonStart")
+        return self.config.getKeyControl()
 
     def run(self):
         self.running = True
@@ -72,6 +77,7 @@ class myGamepad(QtCore.QThread):
                 if self.record:
                     if self.load:
                         self.loadKey()
+                        keys = self.loadKey()
                         self.load = False
                     if event.type == ecodes.EV_KEY:
                         if event.value == 1:
