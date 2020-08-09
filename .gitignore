@@ -3,7 +3,8 @@
 __pycache__/*
 .module/__pycache__/*
 module/__pycache__/*
-app_main/
+venv/
+app_main/__pycache__/
 new 1
 test.py
 test2.py

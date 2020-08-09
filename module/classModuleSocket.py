@@ -101,7 +101,6 @@ class Server(QThread):
                 break
             except Exception as e:
                 print(e)
-
             for sock in ready_to_read:
                 if sock is self.server:
                     self.accept_connection(sock)

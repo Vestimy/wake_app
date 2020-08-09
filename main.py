@@ -3,9 +3,10 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5 import QtWidgets, QtCore
 from app_main.wake import Ui_Form  # импорт сгенерированного файла из QtDesigner
 from app_main.login import Ui_Login_Form  # импорт сгенерированного файла из QtDesigner
-from module.classModuleSocket import Server
+# from module.classModuleSocket import Server
+from test_socket import Server
 
-# Подключение библиотеку для работы с Джойстиком в линукс
+# Подключение библиотеку для рабоы с Джойстиком в линукс
 path = "config/config2.ini"
 pathWake = "config/wake.ini"
 pathModbus = "config/modbus.ini"
