@@ -6,6 +6,9 @@ from app_main.login import Ui_Login_Form  # импорт сгенерирова�
 # from module.classModuleSocket import Server
 from test_socket import Server
 
+from classDb import session
+from classModels import Users
+
 # Подключение библиотеку для рабоы с Джойстиком в линукс
 path = "config/config2.ini"
 pathWake = "config/wake.ini"
@@ -74,6 +77,9 @@ class mywindow(QtWidgets.QWidget):
         self.ui.portEdit.setText(str(self.api_port))
 
         self.sock.socketsignal.connect(self.on_change2, QtCore.Qt.QueuedConnection)
+        self.sock.namesigal.connect(self.name_change, QtCore.Qt.QueuedConnection)
+
+
 
         self.ui.checkApiReq.setChecked(self.config.getApiReq())
         self.ui.checkApiReq.stateChanged.connect(self.requestApi)
@@ -102,6 +108,8 @@ class mywindow(QtWidgets.QWidget):
         self.ui.pushButtonApiSave.clicked.connect(self.ApiSave)
         # self.ui.pushButtonApiStart.clicked.connect(self.ApiStart)
         self.ui.pushButtonApiStop.clicked.connect(self.ApiStop)
+
+        self.ui.pushButtonAddUserApi.clicked.connect(self.add_user_api)
 
         self.ui.recordButtonForward.clicked.connect(self.recordKey)
         self.ui.recordButtonBackward.clicked.connect(self.recordKey)
@@ -436,6 +444,32 @@ class mywindow(QtWidgets.QWidget):
             self.config.setApiReq("True")
         else:
             self.config.setApiReq("False")
+
+    def add_user_api(self):
+        self.ui.api_erros.setText('')
+        name = self.ui.api_name.text()
+        login = self.ui.api_login.text()
+        password = self.ui.api_password.text()
+
+        if name == "" or login == '' or password == '':
+            self.ui.api_erros.setText('Введите все данный')
+        else:
+            add_user = Users(name=name, login=login, password=password)
+            session.add(add_user)
+            session.commit()
+            self.clear()
+
+            self.ui.api_erros.setText('Оператор добавлен')
+
+    def clear(self):
+
+        self.ui.api_name.setText('')
+        self.ui.api_login.setText('')
+        self.ui.api_password.setText('')
+
+    def name_change(self, name):
+        self.ui.only_1.setText('Оператор: ')
+        self.ui.only_2.setText(name)
 
     def closeEvent(self, QCloseEvent):
         print("Стоп сервер")

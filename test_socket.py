@@ -17,6 +17,7 @@ import rsa
 
 class Server(QThread):
     socketsignal = pyqtSignal(str)
+    namesigal = pyqtSignal(str)
 
     def __init__(self, ip, port=1802):
         QThread.__init__(self)
@@ -94,6 +95,7 @@ class Server(QThread):
         password = msg['authentication'].get('password')
         if login is not None and password is not None:
             user = Users.authentificate(login, password)
+            self.signal_only_user(user.name)
             if user:
                 self.add_token(user)
                 # print(user.login, user.password)
@@ -113,6 +115,8 @@ class Server(QThread):
             }
         # print(msg)
         self.client_msg(client_socket, msg)
+    def signal_only_user(self, name):
+        self.namesigal.emit(name)
 
     def add_token(self, user):
         new_token = Tokens(id=user.id)
