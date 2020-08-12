@@ -60,9 +60,16 @@ class Server(QThread):
                 self.sock_client[client_socket] = request
             else:
                 if request:
-                    request = rsa.decrypt(request, self.client_socket.get(client_socket)[1])
-                    print(request)
-                    self.work_msg(client_socket, self.json_read_msg(request))
+                    try:
+
+                        request = rsa.decrypt(request, self.client_socket.get(client_socket)[1])
+
+                        # print(request)
+                        self.work_msg(client_socket, self.json_read_msg(request))
+                    except Exception:
+
+                        self.to_monitor.remove(client_socket)
+
                 else:
                     self.to_monitor.remove(client_socket)
 
@@ -95,8 +102,8 @@ class Server(QThread):
         password = msg['authentication'].get('password')
         if login is not None and password is not None:
             user = Users.authentificate(login, password)
-            self.signal_only_user(user.name)
             if user:
+                self.signal_only_user(user.name)
                 self.add_token(user)
                 # print(user.login, user.password)
                 msg = self.add_token(user)
@@ -106,14 +113,10 @@ class Server(QThread):
                 msg = {
                     'errors': 'Неверный пароль'
                 }
-
-                # # msg = json.dumps(self.add_token())
-                # client_socket.send(json.dumps(msg).encode())
         else:
             msg = {
                 'errors': 'Введите логин и пароль'
             }
-        # print(msg)
         self.client_msg(client_socket, msg)
     def signal_only_user(self, name):
         self.namesigal.emit(name)
@@ -139,6 +142,11 @@ class Server(QThread):
                     self.accept_connection(sock)
                 else:
                     self.read_message(sock)
+
+    def stop_server(self):
+        self.server.close()
+        self.runs = False
+
 
 
 if __name__ == '__main__':

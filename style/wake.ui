@@ -2451,96 +2451,11 @@ color: white; </string>
           <attribute name="title">
            <string>API</string>
           </attribute>
-          <widget class="QLineEdit" name="ipEdit">
-           <property name="geometry">
-            <rect>
-             <x>40</x>
-             <y>50</y>
-             <width>113</width>
-             <height>25</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="portEdit">
-           <property name="geometry">
-            <rect>
-             <x>170</x>
-             <y>50</y>
-             <width>113</width>
-             <height>25</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="pushButtonApiSave">
-           <property name="geometry">
-            <rect>
-             <x>300</x>
-             <y>50</y>
-             <width>89</width>
-             <height>25</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Сохранить</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_6">
-           <property name="geometry">
-            <rect>
-             <x>40</x>
-             <y>30</y>
-             <width>67</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>IP</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_10">
-           <property name="geometry">
-            <rect>
-             <x>170</x>
-             <y>30</y>
-             <width>67</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Port</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="pushButtonApiStart">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>160</y>
-             <width>89</width>
-             <height>25</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Запустить</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="pushButtonApiStop">
-           <property name="geometry">
-            <rect>
-             <x>120</x>
-             <y>160</y>
-             <width>89</width>
-             <height>25</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Остановить</string>
-           </property>
-          </widget>
           <widget class="QLabel" name="label_12">
            <property name="geometry">
             <rect>
-             <x>30</x>
-             <y>230</y>
+             <x>10</x>
+             <y>330</y>
              <width>67</width>
              <height>17</height>
             </rect>
@@ -2560,101 +2475,6 @@ color: white; </string>
            </property>
            <property name="text">
             <string/>
-           </property>
-          </widget>
-          <widget class="QCheckBox" name="checkApiReq">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>100</y>
-             <width>181</width>
-             <height>23</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Заупскать при старте</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="pushButtonAddUserApi">
-           <property name="geometry">
-            <rect>
-             <x>480</x>
-             <y>220</y>
-             <width>231</width>
-             <height>25</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Добавить пользователя</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="api_login">
-           <property name="geometry">
-            <rect>
-             <x>480</x>
-             <y>50</y>
-             <width>231</width>
-             <height>25</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="api_password">
-           <property name="geometry">
-            <rect>
-             <x>480</x>
-             <y>110</y>
-             <width>231</width>
-             <height>25</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_13">
-           <property name="geometry">
-            <rect>
-             <x>480</x>
-             <y>30</y>
-             <width>67</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Логин</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_15">
-           <property name="geometry">
-            <rect>
-             <x>480</x>
-             <y>90</y>
-             <width>67</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Пароль</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="api_name">
-           <property name="geometry">
-            <rect>
-             <x>480</x>
-             <y>160</y>
-             <width>221</width>
-             <height>25</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_16">
-           <property name="geometry">
-            <rect>
-             <x>480</x>
-             <y>140</y>
-             <width>67</width>
-             <height>17</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Имя</string>
            </property>
           </widget>
           <widget class="QLabel" name="api_erros">
@@ -2698,6 +2518,240 @@ color: white; </string>
            <property name="text">
             <string/>
            </property>
+          </widget>
+          <widget class="QWidget" name="horizontalLayoutWidget_3">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>0</y>
+             <width>378</width>
+             <height>126</height>
+            </rect>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_23">
+            <item>
+             <widget class="QWidget" name="verticalWidget_4" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_37">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_35">
+                 <item>
+                  <widget class="QLabel" name="label_6">
+                   <property name="text">
+                    <string>IP</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="ipEdit">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_36">
+                 <item>
+                  <widget class="QLabel" name="label_10">
+                   <property name="text">
+                    <string>Port</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="portEdit">
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+             <widget class="QPushButton" name="pushButtonApiSave">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Сохранить</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="verticalLayoutWidget_7">
+           <property name="geometry">
+            <rect>
+             <x>410</x>
+             <y>0</y>
+             <width>304</width>
+             <height>210</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_41">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_40">
+              <item>
+               <widget class="QLabel" name="label_16">
+                <property name="text">
+                 <string>Имя</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="api_name">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>25</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_38">
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>Логин</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="api_login">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>25</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_39">
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_15">
+                <property name="text">
+                 <string>Пароль</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="api_password">
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>25</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonAddUserApi">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Добавить оператора</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="verticalLayoutWidget_8">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>240</y>
+             <width>311</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_42">
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QCheckBox" name="checkApiReq">
+              <property name="text">
+               <string>Заупскать при старте</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+              <property name="tristate">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_24">
+              <item>
+               <widget class="QPushButton" name="pushButtonSocketStop">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Остановить</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButtonSocketStart">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Запустить</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </widget>
          <widget class="QWidget" name="tabUsers">

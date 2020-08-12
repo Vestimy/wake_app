@@ -34,7 +34,7 @@ class Users(Base):
             user = cls.query.filter(cls.login == login).one()
             if not bcrypt.verify(password, user.password):
                 return False
-        except:
+        except Exception:
             return False
         return user
 

@@ -4,7 +4,7 @@ from PyQt5 import QtWidgets, QtCore
 from app_main.wake import Ui_Form  # импорт сгенерированного файла из QtDesigner
 from app_main.login import Ui_Login_Form  # импорт сгенерированного файла из QtDesigner
 # from module.classModuleSocket import Server
-from test_socket import Server
+from classSocketServer import Server
 
 from classDb import session
 from classModels import Users
@@ -42,11 +42,11 @@ class LoginDialog(QtWidgets.QDialog, Ui_Login_Form, classConfig.Config):
 
 # Главное окно
 class mywindow(QtWidgets.QWidget):
-    def __init__(self):
+    def __init__(self, config):
         super(mywindow, self).__init__()
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-        self.config = classConfig.Config()
+        self.config = config
         # Переменные
         self.controlrun = True
         self.ui.cheacktext = "Нажал кнопку: "
@@ -60,8 +60,9 @@ class mywindow(QtWidgets.QWidget):
         ###############################################################
         #   Соккет сервер
         ###############################################################
-        self.sock = Server('')
-        self.sock.start()
+        self.sock = self.socket_init(self.config.getApiIp())
+        # self.sock = Server('')
+        # self.sock.start()
 
         ###############################################################
         self.pathverificationcontrol()
@@ -75,9 +76,6 @@ class mywindow(QtWidgets.QWidget):
         self.api_port = self.config.getApiPort()
         self.ui.ipEdit.setText(self.api_ip)
         self.ui.portEdit.setText(str(self.api_port))
-
-        self.sock.socketsignal.connect(self.on_change2, QtCore.Qt.QueuedConnection)
-        self.sock.namesigal.connect(self.name_change, QtCore.Qt.QueuedConnection)
 
 
 
@@ -106,8 +104,8 @@ class mywindow(QtWidgets.QWidget):
         self.ui.pushButtonUpdate.clicked.connect(self.test)
         self.ui.restartButton.clicked.connect(self.showDialog)
         self.ui.pushButtonApiSave.clicked.connect(self.ApiSave)
-        # self.ui.pushButtonApiStart.clicked.connect(self.ApiStart)
-        self.ui.pushButtonApiStop.clicked.connect(self.ApiStop)
+        self.ui.pushButtonSocketStart.clicked.connect(self.ApiStart)
+        self.ui.pushButtonSocketStop.clicked.connect(self.ApiStop)
 
         self.ui.pushButtonAddUserApi.clicked.connect(self.add_user_api)
 
@@ -155,6 +153,13 @@ class mywindow(QtWidgets.QWidget):
         self.ui.getWakecontrol.getWakeControlSet(False, "setWakeRecord", True)
         if self.ui.modbus.modbusval:
             self.ui.modbus.serial.baudrate = self.config.getModbusSpeed()
+
+    def socket_init(self, ip='', port=1802):
+        self.sock = Server(ip, port)
+        self.sock.start()
+        self.sock.socketsignal.connect(self.on_change2, QtCore.Qt.QueuedConnection)
+        self.sock.namesigal.connect(self.name_change, QtCore.Qt.QueuedConnection)
+        return self.sock
 
     def sBox(self, value):
         self.ui.horizontalSlider.setValue(value)
@@ -424,20 +429,30 @@ class mywindow(QtWidgets.QWidget):
             self.showDialog()
 
     def ApiSave(self):
+        self.sock.runs = True
         self.config.setApiIp(self.ui.ipEdit.text())
         self.config.setApiPort(self.ui.portEdit.text())
 
-        self.sock = classSocketServer.Server(self.api_ip, self.api_port)
+        self.sock = Server(self.api_ip, self.api_port)
 
         self.ui.labelApiRun.setText("Сервер запущен")
 
         print(self.sock.isRunning())
 
     def ApiStop(self):
-        self.sock.running = False
+        self.sock.runs = False
         self.ui.labelApiRun.setText("Сервер остановлен")
+        self.sock.stop_server()
+        if self.sock.isRunning():
+            self.sock.terminate()
 
-        print(self.sock.isRunning())
+        # print(self.sock.isRunning())
+
+    def ApiStart(self):
+        if not self.sock.isRunning():
+            self.sock = self.socket_init(self.config.getApiIp())
+            self.sock.start()
+            return self.sock
 
     def requestApi(self, state):
         if state == Qt.Checked:
@@ -483,11 +498,11 @@ if __name__ == "__main__":
     if requestpass:
         login = LoginDialog()
         if login.exec_() == QtWidgets.QDialog.Accepted:
-            window = mywindow()
+            window = mywindow(config)
             window.show()
             sys.exit(app.exec_())
 
     else:
-        window = mywindow()
+        window = mywindow(config)
         window.show()
         sys.exit(app.exec_())

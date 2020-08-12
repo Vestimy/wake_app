@@ -57,7 +57,7 @@ class ClientSocket:
             print(msg)
         else:
             print(msg)
-            print(msg.get('errors'))
+            print(msg.pop('errors'))
 
     def send_msg(self, msg):
         if self.pubkey is None:
@@ -82,6 +82,10 @@ if __name__ == '__main__':
     while client.fff:
         login = input('Введите логин: ')
         password = input('Введите пароль: ')
+        try:
+            client.msg.pop()
+        except:
+            pass
 
         client.msg['authentication'] = {
             'login': login,
